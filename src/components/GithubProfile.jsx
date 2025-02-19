@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Github, Linkedin, Twitter, Mail, ArrowRight, Book, Code, Brain, Database, Award, Zap } from 'lucide-react';
+import foto from '../assets/foto.jpeg';
+import { Github, Linkedin, Twitter, Mail, ArrowRight, Brain, Database, Code, Zap } from 'lucide-react';
 
 const GithubProfile = () => {
   const [activeTab, setActiveTab] = useState('research');
@@ -8,7 +9,7 @@ const GithubProfile = () => {
     {
       title: "Automation of observational gait analysis through an optical 3D motion system and transformers",
       url: "https://doi.org/10.1007/s10489-024-06163-w",
-      year: 2024
+      year: 2025
     },
     {
       title: "A comparison between Multilayer Perceptrons and Kolmogorov-Arnold Networks for multi-task classification in sitting posture recognition",
@@ -23,110 +24,112 @@ const GithubProfile = () => {
   ];
 
   const researchAreas = [
-    { icon: <Brain className="w-6 h-6" />, name: "Machine Learning & AI" },
-    { icon: <Database className="w-6 h-6" />, name: "Synthetic Data" },
-    { icon: <Code className="w-6 h-6" />, name: "CUDA Programming" },
-    { icon: <Zap className="w-6 h-6" />, name: "Quantum Computing" }
+    { icon: <Brain className="w-6 h-6 text-blue-500" />, name: "Machine Learning & AI" },
+    { icon: <Database className="w-6 h-6 text-blue-500" />, name: "Synthetic Data" },
+    { icon: <Code className="w-6 h-6 text-blue-500" />, name: "CUDA Programming" },
+    { icon: <Zap className="w-6 h-6 text-blue-500" />, name: "Quantum Computing" }
   ];
 
   return (
-    <div className="max-w-4xl mx-auto p-8 bg-white dark:bg-gray-900">
-      {/* Header Section */}
-      <div className="text-center mb-12">
-        <img 
-          src="/api/placeholder/150/150" 
-          alt="Profile" 
-          className="rounded-full mx-auto mb-4 border-4 border-blue-500"
-        />
-        <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
-          David Carneros-Prado
-        </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300">
-          Predoctoral Researcher in Advanced Computing Technologies
-        </p>
-      </div>
+    <div className="min-h-screen bg-white text-gray-900">
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        {/* Header Section */}
+        <div className="text-center mb-8">
+            <img 
+            src={foto} 
+            alt="Profile" 
+            className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-blue-500"
+          />
+          <h1 className="text-4xl font-bold mb-2 text-blue-600">
+            David Carneros-Prado
+          </h1>
+          <p className="text-xl text-gray-600">
+            Predoctoral Researcher in Advanced Computing Technologies
+          </p>
+        </div>
 
-      {/* Interactive Tabs */}
-      <div className="flex justify-center mb-8 space-x-4">
-        {['research', 'publications', 'connect'].map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 rounded-lg transition-all ${
-              activeTab === tab 
-                ? 'bg-blue-500 text-white' 
-                : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200'
-            }`}
-          >
-            {tab.charAt(0).toUpperCase() + tab.slice(1)}
-          </button>
-        ))}
-      </div>
+        {/* Interactive Tabs */}
+        <div className="flex justify-center mb-8 gap-4">
+          {['research', 'publications', 'connect'].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+                activeTab === tab 
+                  ? 'bg-blue-500 text-white' 
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            </button>
+          ))}
+        </div>
 
-      {/* Content Sections */}
-      <div className="transition-all duration-300">
-        {activeTab === 'research' && (
-          <div className="grid grid-cols-2 gap-4">
-            {researchAreas.map((area, index) => (
-              <div key={index} className="p-4 border rounded-lg hover:shadow-lg transition-all flex items-center space-x-3 bg-gray-50 dark:bg-gray-800">
-                {area.icon}
-                <span>{area.name}</span>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {activeTab === 'publications' && (
-          <div className="space-y-4">
-            {publications.map((pub, index) => (
-              <a 
-                key={index}
-                href={pub.url}
-                className="block p-4 border rounded-lg hover:shadow-lg transition-all bg-gray-50 dark:bg-gray-800"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <h3 className="font-medium">{pub.title}</h3>
-                    <p className="text-sm text-gray-500">{pub.year}</p>
-                  </div>
-                  <ArrowRight className="w-5 h-5 text-blue-500" />
+        {/* Content Sections */}
+        <div className="mb-8">
+          {activeTab === 'research' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {researchAreas.map((area, index) => (
+                <div key={index} className="p-4 bg-gray-50 rounded-lg border border-gray-200 flex items-center gap-3 hover:shadow-md transition-shadow">
+                  {area.icon}
+                  <span className="text-gray-700 font-medium">{area.name}</span>
                 </div>
+              ))}
+            </div>
+          )}
+
+          {activeTab === 'publications' && (
+            <div className="space-y-4">
+              {publications.map((pub, index) => (
+                <a 
+                  key={index}
+                  href={pub.url}
+                  className="block p-4 bg-gray-50 rounded-lg border border-gray-200 hover:shadow-md transition-shadow"
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <div>
+                      <h3 className="font-medium text-gray-900">{pub.title}</h3>
+                      <p className="text-sm text-gray-500 mt-1">{pub.year}</p>
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-blue-500 flex-shrink-0" />
+                  </div>
+                </a>
+              ))}
+            </div>
+          )}
+
+          {activeTab === 'connect' && (
+            <div className="flex justify-center gap-6">
+              <a href="https://github.com/dcarneros" className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700">
+                <Github className="w-6 h-6" />
               </a>
-            ))}
-          </div>
-        )}
-
-        {activeTab === 'connect' && (
-          <div className="flex justify-center space-x-4">
-            <a href="https://github.com/dcarneros" className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-800">
-              <Github className="w-6 h-6" />
-            </a>
-            <a href="https://www.linkedin.com/in/YOUR_LINKEDIN" className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-800">
-              <Linkedin className="w-6 h-6" />
-            </a>
-            <a href="https://twitter.com/YOUR_TWITTER" className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-800">
-              <Twitter className="w-6 h-6" />
-            </a>
-            <a href="mailto:your.email@example.com" className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-800">
-              <Mail className="w-6 h-6" />
-            </a>
-          </div>
-        )}
-      </div>
-
-      {/* Stats Section */}
-      <div className="mt-12 grid grid-cols-3 gap-4 text-center">
-        <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-          <h3 className="text-xl font-bold text-blue-600 dark:text-blue-400">10+</h3>
-          <p className="text-sm text-gray-600 dark:text-gray-300">Publications</p>
+              <a href="https://www.linkedin.com/in/YOUR_LINKEDIN" className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700">
+                <Linkedin className="w-6 h-6" />
+              </a>
+              <a href="https://twitter.com/YOUR_TWITTER" className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700">
+                <Twitter className="w-6 h-6" />
+              </a>
+              <a href="mailto:your.email@example.com" className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700">
+                <Mail className="w-6 h-6" />
+              </a>
+            </div>
+          )}
         </div>
-        <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-          <h3 className="text-xl font-bold text-purple-600 dark:text-purple-400">5+</h3>
-          <p className="text-sm text-gray-600 dark:text-gray-300">Years Research</p>
-        </div>
-        <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-          <h3 className="text-xl font-bold text-green-600 dark:text-green-400">3+</h3>
-          <p className="text-sm text-gray-600 dark:text-gray-300">Active Projects</p>
+
+        {/* Stats Section */}
+        <div className="grid grid-cols-3 gap-4">
+          <div className="p-4 bg-blue-50 rounded-lg text-center">
+            <h3 className="text-xl font-bold text-blue-600">10+</h3>
+            <p className="text-sm text-gray-600">Publications</p>
+          </div>
+          <div className="p-4 bg-purple-50 rounded-lg text-center">
+            <h3 className="text-xl font-bold text-purple-600">5+</h3>
+            <p className="text-sm text-gray-600">Years Research</p>
+          </div>
+          <div className="p-4 bg-green-50 rounded-lg text-center">
+            <h3 className="text-xl font-bold text-green-6">3+</h3>
+            <p className="text-sm text-gray-600">Active Projects</p>
+          </div>
         </div>
       </div>
     </div>
