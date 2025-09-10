@@ -6,6 +6,7 @@ import PublicationsSection from './PublicationsSection';
 import TeachingSection from './TeachingSection';
 import ConnectSection from './ConnectSection';
 import MetricsSection from './MetricsSection';
+// import foto from assests/foto.jpg
 
 import { academicData } from '../data/academicData';
 

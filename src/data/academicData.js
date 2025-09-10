@@ -210,6 +210,33 @@ export const academicData = {
         institution: "University of Castilla-La Mancha",
         year: "2024",
         campus: "Talavera de la Reina"
+      },
+      {
+        title: "Sistema de Corrección de Postura en Tiempo Real",
+        student: "Daniel Duran",
+        type: "Master's Thesis",
+        grade: "10/10",
+        institution: "University of Castilla-La Mancha",
+        year: "2025",
+        campus: "Talavera de la Reina"
+      },
+      {
+        title: "REPS: Sistema de Corrección Postural y Técnica en Entrenamientos de Fuerza",
+        student: "Marcelo Chinarro Cabrero",
+        type: "Bachelor's Thesis",
+        grade: "9/10",
+        institution: "University of Castilla-La Mancha",
+        year: "2025",
+        campus: "Ciudad Real"
+      },
+      {
+        title: "Sistema de seguimiento ocular para el análisis de la interacción en entornos de Realidad Virtual",
+        student: "Alejandro Cañas Borreguero",
+        type: "Bachelor's Thesis",
+        grade: "10/10",
+        institution: "University of Castilla-La Mancha",
+        year: "2025",
+        campus: "Ciudad Real"
       }
     ]
   },
@@ -217,8 +244,8 @@ export const academicData = {
   metrics: {
     publications: 13, // Journals + conferences
     researchYears: 5,
-    hIndex: 4,
-    citations: 53,
+    hIndex: 6,
+    citations: 98,
     projects: ["Just move!", "SHARA3", "SSITH", "TAICare"]
   }
 };
