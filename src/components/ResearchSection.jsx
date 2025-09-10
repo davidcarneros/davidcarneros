@@ -1,7 +1,7 @@
 import React from 'react';
 import { BarChart, Atom } from 'lucide-react';
 import { academicData } from '../data/academicData';
-import EnhancedNeuralNetworkAnimation from './EnhancedNeuralNetworkAnimation';
+import ModernNeuralNetwork from './ModernNeuralNetwork';
 
 const ResearchSection = () => {
   // Separar las áreas de investigación en tradicionales y nuevas
@@ -61,7 +61,7 @@ const ResearchSection = () => {
           </svg>
           Neural Network Visualization
         </h3>
-        <EnhancedNeuralNetworkAnimation />
+        <ModernNeuralNetwork />
       </div>
     </div>
   );
