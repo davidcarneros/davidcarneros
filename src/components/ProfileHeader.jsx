@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import foto from "../assets/foto.jpeg";
 
 const ProfileHeader = () => {
+  const [text, setText] = useState('');
+  const fullText = "PhD in Advanced Computing Technologies";
+
+  useEffect(() => {
+    let index = 0;
+    const timer = setInterval(() => {
+      setText(fullText.slice(0, index));
+      index++;
+      if (index > fullText.length) {
+        clearInterval(timer);
+      }
+    }, 50);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className="text-center mb-8 relative z-10">
       <div className="relative inline-block group">
@@ -18,8 +33,9 @@ const ProfileHeader = () => {
       <h1 className="text-5xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
         David Carneros-Prado
       </h1>
-      <p className="text-2xl text-primary-400 font-light tracking-wide mb-2">
-        PhD in Advanced Computing Technologies
+      <p className="text-2xl text-primary-400 font-light tracking-wide mb-2 min-h-[2rem]">
+        {text}
+        <span className="animate-pulse">|</span>
       </p>
       <p className="text-lg text-gray-400 font-light">
         University of Castilla-La Mancha (UCLM)

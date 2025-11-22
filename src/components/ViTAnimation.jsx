@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Brain, Layers, Grid, Zap, Activity } from 'lucide-react';
+import 'katex/dist/katex.min.css';
+import { InlineMath } from 'react-katex';
 
 const ViTAnimation = () => {
     const [step, setStep] = useState(0);
@@ -207,7 +209,7 @@ const ViTAnimation = () => {
                         </h3>
                         <p className="text-gray-400 text-sm mb-3 leading-relaxed">{steps[step].description}</p>
                         <div className="bg-black/30 rounded-lg p-3 border border-white/5 font-mono text-sm text-primary-300 overflow-x-auto">
-                            <code className="select-all">{steps[step].formula}</code>
+                            <InlineMath math={steps[step].formula} />
                         </div>
                     </div>
                 </div>

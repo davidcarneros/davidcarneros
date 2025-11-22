@@ -34,46 +34,53 @@ const ParticleBackground = () => {
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.size = Math.random() * 2 + 1;
-                this.color = 'rgba(14, 165, 233, 0.5)'; // primary-500 with opacity
+                this.vx = (Math.random() - 0.5) * 0.3; // Slower base speed
+                this.vy = (Math.random() - 0.5) * 0.3;
+                this.size = Math.random() * 1.5 + 0.5; // Smaller particles
+                this.baseColor = 'rgba(14, 165, 233, 0.3)'; // Fainter base color
             }
 
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
 
-                // Bounce off edges
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                // Wrap around edges instead of bouncing for a flow effect
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
 
-                // Mouse interaction
+                // Mouse interaction - Gentle Nudge
                 if (mouse.x != null) {
                     let dx = mouse.x - this.x;
                     let dy = mouse.y - this.y;
                     let distance = Math.sqrt(dx * dx + dy * dy);
-                    if (distance < 150) {
+                    const maxDistance = 200;
+
+                    if (distance < maxDistance) {
+                        // Calculate vector pointing away from mouse (repulsion) or towards (attraction)
+                        // Let's do a gentle attraction that swirls
                         const forceDirectionX = dx / distance;
                         const forceDirectionY = dy / distance;
-                        const force = (150 - distance) / 150;
-                        const directionX = forceDirectionX * force * 0.5;
-                        const directionY = forceDirectionY * force * 0.5;
-                        this.vx += directionX;
-                        this.vy += directionY;
-                    }
-                }
+                        const force = (maxDistance - distance) / maxDistance;
 
-                // Limit speed
-                const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
-                if (speed > 2) {
-                    this.vx = (this.vx / speed) * 2;
-                    this.vy = (this.vy / speed) * 2;
+                        // Gentle attraction
+                        this.vx += forceDirectionX * force * 0.02;
+                        this.vy += forceDirectionY * force * 0.02;
+
+                        // Limit speed to prevent clumping
+                        const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+                        const maxSpeed = 1.5;
+                        if (speed > maxSpeed) {
+                            this.vx = (this.vx / speed) * maxSpeed;
+                            this.vy = (this.vy / speed) * maxSpeed;
+                        }
+                    }
                 }
             }
 
             draw() {
-                ctx.fillStyle = this.color;
+                ctx.fillStyle = this.baseColor;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
@@ -82,7 +89,8 @@ const ParticleBackground = () => {
 
         const init = () => {
             particles = [];
-            const numberOfParticles = (canvas.width * canvas.height) / 15000;
+            // Reduce density slightly for cleaner look
+            const numberOfParticles = (canvas.width * canvas.height) / 20000;
             for (let i = 0; i < numberOfParticles; i++) {
                 particles.push(new Particle());
             }
@@ -95,31 +103,34 @@ const ParticleBackground = () => {
                 particles[i].update();
                 particles[i].draw();
 
-                // Connect particles
+                // Connect particles - Graph Mode
+                // Only connect to nearest neighbors to avoid mess
+                let connections = 0;
                 for (let j = i; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
 
-                    if (distance < 100) {
+                    if (distance < 120 && connections < 3) { // Limit connections
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(14, 165, 233, ${0.2 * (1 - distance / 100)})`;
-                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = `rgba(14, 165, 233, ${0.15 * (1 - distance / 120)})`;
+                        ctx.lineWidth = 0.5;
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
                         ctx.stroke();
+                        connections++;
                     }
                 }
 
-                // Connect to mouse
+                // Connect to mouse with a "web" effect
                 if (mouse.x != null) {
                     const dx = particles[i].x - mouse.x;
                     const dy = particles[i].y - mouse.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    if (distance < 150) {
+                    if (distance < 180) {
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(14, 165, 233, ${0.5 * (1 - distance / 150)})`;
-                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = `rgba(168, 85, 247, ${0.2 * (1 - distance / 180)})`; // Purple connection to mouse
+                        ctx.lineWidth = 0.8;
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(mouse.x, mouse.y);
                         ctx.stroke();
